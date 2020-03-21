@@ -1,0 +1,14 @@
+#version 430 compatibility
+
+uniform int fogMode;
+
+in vec4 color;
+
+void main()
+{
+    gl_FragColor = color;
+    if(fogMode == 9729)
+        gl_FragColor.rgb = mix(gl_Fog.color.rgb, gl_FragColor.rgb, clamp((gl_Fog.end - gl_FogFragCoord) / (gl_Fog.end - gl_Fog.start), 0.0, 1.0));
+    else if(fogMode == 2048)
+        gl_FragColor.rgb = mix(gl_Fog.color.rgb, gl_FragColor.rgb, clamp(exp(-gl_FogFragCoord * gl_Fog.density), 0.0, 1.0));
+}

@@ -1,0 +1,32 @@
+#version 430 compatibility
+
+uniform mat4 gbufferModelView;                  //modelview matrix after setting up the camera transformations
+uniform mat4 gbufferModelViewInverse;           //inverse gbufferModelView
+uniform vec3 cameraPosition;                    //camera position in world space
+
+out vec4 color;
+out vec4 texpos;
+
+#define DEPTH 1000 // [100 300 500 800 1000 3000 10000]
+
+void main()
+{
+    vec4 viewpos = gl_ModelViewMatrix * gl_Vertex;
+
+    // vec4 camPos = gbufferModelViewInverse * viewpos;
+    // float r = camPos.y + cameraPosition.y + DEPTH;
+    // float arclen = length(camPos.xz);
+    // vec2 dir = normalize(camPos.xz);
+    // float rad = arclen / DEPTH;
+    // float y = r * cos(rad) - cameraPosition.y - DEPTH;
+    // float x = r * sin(rad);
+
+    // camPos.xz = x * dir;
+    // camPos.y = y;
+    // viewpos = gbufferModelView * camPos;
+
+    gl_FogFragCoord = length(viewpos.xyz);
+    gl_Position = gl_ProjectionMatrix * viewpos;
+    color = gl_Color;
+    texpos = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+}
