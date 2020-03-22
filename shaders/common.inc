@@ -2,7 +2,7 @@ uniform mat4 gbufferModelView;
 uniform mat4 gbufferModelViewInverse;
 uniform vec3 cameraPosition;
 
-#define DEPTH 1000 // [50 100 500 1000 5000 10000]
+#define DEPTH 1000 // [1000 800 500 300 100 50]
 #define PI 3.1415926535898
 
 out float notrender;
